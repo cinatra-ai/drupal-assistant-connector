@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Build output (tsc outDir) and test coverage
+dist/
+coverage/
+
+# npm pack output
+*.tgz
+
+# Lockfiles — extracted extension repos commit none (see ci.yml install step)
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Secrets — never commit
+.env
+.env.*
+
+# Logs
+*.log
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
