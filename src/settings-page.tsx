@@ -10,11 +10,13 @@ import { FieldGroup, Field, FieldLabel } from "./components/ui/field";
 import { Main, PageHeader, PageContent } from "@cinatra-ai/sdk-ui/marketplace";
 import { CopyButton } from "./copy-button";
 import { requireExtensionAction } from "@cinatra-ai/sdk-extensions";
-import {
-  generateDrupalWidgetAuthConfig,
-  readDrupalWidgetAuthConfig,
-} from "@/lib/drupal-widget-auth";
-import { getDrupalMcpInstanceStatuses } from "@/lib/drupal-mcp-connection";
+// Widget auth-config read/generate + per-instance MCP statuses resolve via the
+// deps slot (cinatra#172 Stage H2): `@/lib/drupal-widget-auth` /
+// `@/lib/drupal-mcp-connection` stay host-side, adapted by register(ctx) from
+// `@cinatra-ai/host:drupal-widget-auth` + `@cinatra-ai/host:drupal-mcp`. The
+// "use server" action CANNOT close over render-time props, so the globalThis
+// deps slot is the only seam that reaches it.
+import { getDrupalAssistantDeps } from "./deps";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Drupal Widget | Cinatra" };
@@ -23,7 +25,7 @@ async function generateCredentialsAction(): Promise<void> {
   "use server";
   await requireExtensionAction("@cinatra-ai/drupal-assistant-connector", "manage");
   try {
-    generateDrupalWidgetAuthConfig();
+    getDrupalAssistantDeps().generateWidgetAuthConfig();
     revalidatePath("/connectors/cinatra-ai/drupal-assistant-connector/setup");
   } catch (err) {
     console.error("[drupal-widget] generateCredentialsAction failed:", err);
@@ -33,13 +35,13 @@ async function generateCredentialsAction(): Promise<void> {
 
 export async function DrupalAssistantSettingsPage() {
   await requireExtensionAction("@cinatra-ai/drupal-assistant-connector", "read");
-  const config = readDrupalWidgetAuthConfig();
+  const config = getDrupalAssistantDeps().readWidgetAuthConfig();
   const cinatraUrl =
     process.env.NEXT_PUBLIC_APP_URL ??
     process.env.BETTER_AUTH_URL ??
     "http://localhost:3000";
   const generatedAt = config?.generatedAt ? new Date(config.generatedAt).toLocaleString() : null;
-  const mcpStatuses = await getDrupalMcpInstanceStatuses();
+  const mcpStatuses = await getDrupalAssistantDeps().listMcpInstanceStatuses();
 
   return (
     <Main className="min-h-screen">
