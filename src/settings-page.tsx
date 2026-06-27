@@ -2,6 +2,7 @@ import "server-only";
 
 import type { Metadata } from "next";
 import { revalidatePath } from "next/cache";
+import Link from "next/link";
 
 import { Badge } from "./components/ui/badge";
 import { Button } from "./components/ui/button";
@@ -121,7 +122,13 @@ export async function DrupalAssistantSettingsPage() {
           {mcpStatuses.length === 0 ? (
             <p className="text-sm text-muted-foreground">
               No Drupal instances configured. Add a Drupal connector in{" "}
-              <a href="/connectors/drupal" className="underline underline-offset-4">Connectors &rsaquo; Drupal</a>{" "}
+              <Button
+                asChild
+                variant="link"
+                className="h-auto p-0 underline underline-offset-4"
+              >
+                <Link href="/connectors/drupal">Connectors &rsaquo; Drupal</Link>
+              </Button>{" "}
               to enable the MCP integration.
             </p>
           ) : (
