@@ -51,6 +51,7 @@
     "kind": "connector",
     "displayName": "Drupal Assistant",
     "serverEntry": "./register",
+    "sdkAbiRange": "^2",
     "requestedHostPorts": [
       "capabilities"
     ],
