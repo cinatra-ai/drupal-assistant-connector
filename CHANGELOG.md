@@ -12,7 +12,7 @@ project's merged pull request and release-tag history.
 - chore: keep internal planning notes untracked (#5)
 - chore: npm packaging hygiene — files allowlist + git-archive export-ignore (#6)
 - ci: adopt the org ui-design-system gate (#7)
-- serverEntry cutover: register.ts + deps.ts; settings page drops @/lib/drupal-widget-auth + @/lib/drupal-mcp-connection (cinatra#172 Stage H2) (#8)
+- serverEntry cutover: register.ts + deps.ts; settings page drops @/lib/drupal-widget-auth + @/lib/drupal-mcp-connection (#8)
 - chore: Configure Renovate (#9)
 - ci(release): grant contents: write + pin reusable workflow to .github HEAD (#11)
 - ci: repin reusable release workflow (immutable-safe decoration + corrected build-input provisioning) (#12)
