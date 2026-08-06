@@ -55,6 +55,7 @@
       "name": "Cinatra"
     },
     "displayName": "Drupal Assistant",
+    "logo": "./cinatra/logo.svg",
     "serverEntry": "./register",
     "sdkAbiRange": "^2",
     "requestedHostPorts": [
