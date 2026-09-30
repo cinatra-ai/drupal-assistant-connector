@@ -42,10 +42,7 @@ async function generateCredentialsAction(): Promise<void> {
 export async function DrupalAssistantSettingsPage() {
   await requireExtensionAction("@cinatra-ai/drupal-assistant-connector", "read");
   const config = getDrupalAssistantDeps().readWidgetAuthConfig();
-  const cinatraUrl =
-    process.env.NEXT_PUBLIC_APP_URL ??
-    process.env.BETTER_AUTH_URL ??
-    "http://localhost:3000";
+  const cinatraUrl = getDrupalAssistantDeps().publicBaseUrl?.() ?? "http://localhost:3000";
   const generatedAt = config?.generatedAt ? new Date(config.generatedAt).toLocaleString() : null;
   const mcpStatuses = await getDrupalAssistantDeps().listMcpInstanceStatuses();
 

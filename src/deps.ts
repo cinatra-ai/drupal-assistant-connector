@@ -52,6 +52,9 @@ export interface DrupalAssistantConnectorDeps {
   generateWidgetAuthConfig: () => DrupalWidgetAuthConfig;
   /** Per-instance MCP reachability statuses (host probe + Nango bearer). */
   listMcpInstanceStatuses: () => Promise<DrupalAssistantMcpInstanceStatus[]>;
+  /** The host's own address from the ambient runtime port; null when the host
+   * reports none. Optional so every existing deps stub compiles and runs unchanged. */
+  publicBaseUrl?: () => string | null;
 }
 
 const DRUPAL_ASSISTANT_DEPS_KEY = Symbol.for(
