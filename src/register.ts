@@ -66,6 +66,9 @@ function buildHostBoundDeps(ctx: ExtensionHostContext): DrupalAssistantConnector
     // shared in-process capability id; gating stays here, extension-side).
     generateWidgetAuthConfig: () => widgetAuth().generate(),
     listMcpInstanceStatuses: () => drupalMcp().getInstanceStatuses(),
+    // The host own address from the ambient runtime port, read LAZILY at call
+    // time (a closure; nothing of ctx.runtime is touched at registration).
+    publicBaseUrl: () => ctx.runtime.publicBaseUrl(),
   };
 }
 
